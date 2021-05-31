@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      html,
+      body {
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        background-color: blanchedalmond;
+        width: 100vw;
+        height: 100vh;
+        position: fixed;
+        overflow: hidden;
+      }
+      #controllArea {
+        width: 90vw;
+        height: 35vh;
+        background: red;
+        position: absolute;
+        bottom: 10vh;
+        margin-left: 5vw;
+        margin-right: 5vw;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://cdn.bootcdn.net/ajax/libs/vConsole/3.4.1/vconsole.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+    <!-- <script src="https://cdn.bootcdn.net/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.js"></script> -->
+    <script src="https://cdn.bootcdn.net/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <script src="./robotClient.js"></script>
+    <script>
+      var vConsole = new VConsole();
+    </script>
+    <div id="eventList"></div>
+    <div id="controllArea"></div>
+  </body>
+</html>

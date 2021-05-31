@@ -1,0 +1,17 @@
+{
+  "name": "screenControl",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/withwz/screenControl.git",
+  "author": "武昭 <1632534087@qq.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "node ./src/robotServer.js"
+  },
+  "dependencies": {
+    "robotjs": "^0.6.0",
+    "socket.io": "^4.1.2"
+  },
+  "devDependencies": {
+  }
+}
