@@ -1,4 +1,4 @@
-const socket = io("http://172.19.133.243:8999/");
+const socket = io("http://172.20.10.2:8999/");
 socket.on("connect", function () {
   socket.emit("message", { x: 0, y: 0 });
 });
@@ -18,15 +18,15 @@ $(function () {
   let startTime;
   controllArea.on("touchstart", function (e) {
     startTime = new Date().getTime();
-    startX = e.originalEvent.changedTouches[0].pageX;
-    startY = e.originalEvent.changedTouches[0].pageY;
+    startX = e.changedTouches[0].pageX;
+    startY = e.changedTouches[0].pageY;
     socket.emit("touchstartMessage");
-    return false;
+    return true;
   });
 
   let moveEndX, moveEndY;
   controllArea.on("touchmove", function (e) {
-    const ev = e.originalEvent.changedTouches[0];
+    const ev = e.changedTouches[0];
     moveEndX = ev.clientX;
     moveEndY = ev.clientY;
     const X = moveEndX - startX;
@@ -36,27 +36,22 @@ $(function () {
     data.y = Y;
     socket.emit("message", data);
     appendViewInfo(data);
-    return false;
+    return true;
   });
 
   controllArea.on("touchend", function (e) {
-    mockClick();
-    return false;
+    return true;
   });
 
-  /**
-   * 屏幕点击时触发
-   * @returns
-   */
-  function mockClick() {
-    if (
-      new Date().getTime() - startTime > 50 &&
-      new Date().getTime() - startTime < 200 
-    ) {
-      socket.emit("mouseClick");
-    }
-    return false;
-  }
+  controllArea.on("singleTap", function (e) {
+    socket.emit("mouseClick");
+    return true;
+  });
+
+  controllArea.on("doubleTap", function (e) {
+    socket.emit("mouseDoubleClick");
+    return true;
+  });
 
   const queue = [];
   /**
@@ -70,6 +65,6 @@ $(function () {
       queue.shift();
       el.empty();
     }
-    el.append(queue);
+    el.append(queue.join(""));
   }
 });

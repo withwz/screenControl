@@ -16,7 +16,7 @@ const server = require("http").createServer(function (req, res) {
   res.end("我是跨域请求的内容");
 });
 
-const hostname = "172.19.133.243";
+const hostname = "172.20.10.2";
 const port = 8999;
 const host = hostname + ":" + port;
 server.listen(port, hostname, function () {
@@ -26,7 +26,7 @@ server.listen(port, hostname, function () {
 const io = require("socket.io")(8999, {
   // 允许的跨域访问的
   cors: {
-    origin: "http://172.19.133.243:5500",
+    origin: "http://172.20.10.2:5501",
     methods: ["GET", "POST"],
     allowedHeaders: ["content-type"],
   },
@@ -83,7 +83,7 @@ socket.on("connection", function (client) {
       );
       robot.moveMouse(parseInt(posiX), parseInt(posiY));
     } catch (error) {
-      console.error("moveMouse error: ", error);
+      console.error("moveMouse error:", error);
     }
   });
 
@@ -91,7 +91,16 @@ socket.on("connection", function (client) {
     try {
       robot.mouseClick();
     } catch (error) {
-      console.error("mouseClick error: ", error);
+      console.error("mouseClick error:", error);
+    }
+  });
+
+  client.on("mouseDoubleClick", function (data) {
+    console.log("mouseDoubleClick: ", data);
+    try {
+      robot.mouseClick("left", true);
+    } catch (error) {
+      console.error("mouseClick error:", error);
     }
   });
 });
