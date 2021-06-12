@@ -103,6 +103,15 @@ socket.on("connection", function (client) {
       console.error("mouseClick error:", error);
     }
   });
+
+  client.on("mouseScroll", function (data) {
+    try {
+      const posiY = parseInt(data.y);
+      robot.scrollMouse(0, parseInt(posiY));
+    } catch (error) {
+      console.error("scrollMouse error:", error);
+    }
+  });
 });
 
 socket.on("disconnect", function () {

@@ -15,20 +15,17 @@ $(function () {
   });
 
   let startX, startY;
-  let startTime;
   controllArea.on("touchstart", function (e) {
-    startTime = new Date().getTime();
     startX = e.changedTouches[0].pageX;
     startY = e.changedTouches[0].pageY;
     socket.emit("touchstartMessage");
     return true;
   });
 
-  let moveEndX, moveEndY;
   controllArea.on("touchmove", function (e) {
     const ev = e.changedTouches[0];
-    moveEndX = ev.clientX;
-    moveEndY = ev.clientY;
+    const moveEndX = ev.clientX;
+    const moveEndY = ev.clientY;
     const X = moveEndX - startX;
     const Y = moveEndY - startY;
     const data = {};
@@ -53,6 +50,8 @@ $(function () {
     return true;
   });
 
+  initScrollArea();
+
   const queue = [];
   /**
    * 屏幕上展示坐标信息
@@ -68,3 +67,20 @@ $(function () {
     el.append(queue.join(""));
   }
 });
+
+function initScrollArea() {
+  const scrollArea = $("#scrollArea");
+
+  let startY;
+  scrollArea.on("touchstart", function (e) {
+    startY = e.changedTouches[0].pageY;
+    return true;
+  });
+
+  scrollArea.on("touchmove", function (e) {
+    const moveEndY = e.changedTouches[0].clientY;
+    const Y = moveEndY - startY;
+    socket.emit("mouseScroll", { y: Y / 5 });
+    return true;
+  });
+}
